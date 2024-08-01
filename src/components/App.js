@@ -23,7 +23,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    fetch("http://localhost:9000/questions")
+    fetch("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple")
       .then((res) => res.json())
       .then((data) => dispatch({ type: "dataRecieved", payload: data }))
       .catch((err) => {
