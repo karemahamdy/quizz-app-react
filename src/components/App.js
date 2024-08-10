@@ -1,6 +1,9 @@
 import { useEffect, useReducer } from "react";
 import Header from "./Header";
 import Main from "./Main";
+import Loader from "./Loader";
+import Error from "./Error";
+import StartScreen from "./StartScreen";
 
 const initialState = {
   questions: [],
@@ -10,22 +13,22 @@ const initialState = {
 function reducer(state, action) {
   console.log(state, action);
   switch (action.type) {
-    case "dataRecieved":
+    case "dataReceived":
       return { ...state, questions: action.payload, status: "ready" };
     case "error":
-      return { ...state, status: "dataFailed" };
+      return { ...state, status: "error" };
     default:
       throw new Error("Unknown action");
   }
 }
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    fetch("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple")
+    fetch("http://localhost:9000/questions")
       .then((res) => res.json())
-      .then((data) => dispatch({ type: "dataRecieved", payload: data }))
+      .then((data) => dispatch({ type: "dataReceived", payload: data }))
       .catch((err) => {
         console.error(err);
         dispatch({ type: "error" });
@@ -35,7 +38,12 @@ function App() {
   return (
     <div className="app">
       <Header />
-      <Main />
+      <Main>
+        {status === "loading" && <Loader />}
+        {status === "error" && <Error />}
+        {status === "ready" && <StartScreen/>
+        }
+      </Main>
     </div>
   );
 }
