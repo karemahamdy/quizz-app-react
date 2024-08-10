@@ -1,11 +1,10 @@
-
-
-function Main({Children}) {
-  return(
+function Main ({children}) {
+  return (
     <>
     <main className="main">
-    {Children}
+      {children}
     </main>
+    
     </>
   )
 }
