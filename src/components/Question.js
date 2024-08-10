@@ -1,12 +1,19 @@
 
 
 
-function Question() {
+function Question({question}) {
 
 
   return (
     <div>
-      <h4>questions..</h4>
+      <h4>{question.question}</h4>
+      <div className="options">
+        {question.options.map((option) => (
+          <button className="btn" key={option}>
+          {option}
+          </button>
+        ))}
+      </div>
     
     </div>
   );
