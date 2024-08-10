@@ -1,5 +1,6 @@
+import { type } from "@testing-library/user-event/dist/type";
 
-function StartScreen({numQuestions}) {
+function StartScreen({numQuestions, dispatch}) {
 
   return (
     <div className="start">
@@ -7,7 +8,7 @@ function StartScreen({numQuestions}) {
       <h3>{numQuestions} questions to test your React mastery</h3>
       <button
         className="btn btn-ui"
-        
+        onClick={ () => dispatch({type: "start"})}
       >
         Let's start
       </button>
